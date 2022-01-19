@@ -13,7 +13,12 @@ class ListAllUsersController {
 
       return response.status(201).json({ users });
     } catch (e) {
-      return response.status(400).json({ error: e.message })
+      if (e.message === "User not found") {
+        return response.status(400).json({ error: e.message })
+      } else if (e.message === "The user is not an Admin") {
+        return response.status(404).json({ error: e.message })
+      }
+
     }
   }
 }
